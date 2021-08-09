@@ -1,4 +1,2 @@
-```
-main.BenchmarkCastString 51.932305084s
-main.BenchmarkOnlyString 1m16.29299125s
-```
+main.BenchmarkCastString 54.249220125s
+main.BenchmarkOnlyString 1m21.700179041s
