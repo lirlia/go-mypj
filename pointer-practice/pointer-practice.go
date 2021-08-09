@@ -1,6 +1,10 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"io/ioutil"
+	"runtime"
+)
 
 type Human struct {
 	age int
@@ -20,7 +24,25 @@ func ChangeSex(h *Human) {
 	}
 }
 
+func preStart() {
+	_, f, _, _ := runtime.Caller(0)
+	bytes, _ := ioutil.ReadFile(f)
+	fmt.Println("## source")
+	fmt.Println()
+	fmt.Println("```go")
+	fmt.Println(string(bytes))
+	fmt.Println("```")
+	fmt.Println()
+	fmt.Println("## Result")
+	fmt.Println()
+	fmt.Println("```sh")
+}
+func preEnd() { fmt.Println("```") }
+
 func main() {
+
+	preStart()
+	defer preEnd()
 
 	h := &Human{10, "male"}
 	fmt.Println("--default--")
