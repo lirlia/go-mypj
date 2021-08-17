@@ -42,7 +42,7 @@ func TestDone(t *testing.T) {
 
 func TestDelete(t *testing.T) {
 	rep := New()
-	if len(rep.List()) != 2 {
+	if len(*rep.List()) != 2 {
 		t.Errorf("タスクの数が2であること %d", len(rep.(*instance).tasks))
 	}
 }

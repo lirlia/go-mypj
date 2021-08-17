@@ -4,9 +4,11 @@ import (
 	"github.com/lirlia/go-mypj/todo/model/task"
 )
 
-type instance struct {∏
+type instance struct {
 	tasks []task.Task
 }
+
+var _ task.Repository = &instance{}
 
 func New() task.Repository {
 	s := new(instance)
