@@ -36,7 +36,7 @@ func (s *Honda) Wheel()   { fmt.Println("Wheel : Honda") }
 func (s *Shell) Gas()     { fmt.Println("Gas : Shell") }
 func (s *Panasonic) Gas() { fmt.Println("Gas : Panasonic") }
 
-func NewCarDI(i carInterface) *CarDI {
+func NewCarDI(i carInterface) carInterface {
 	return &CarDI{i}
 }
 
