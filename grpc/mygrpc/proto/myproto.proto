@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+option go_package = "github.com/lirlia/go-mypj/grpc/mygrpc/proto";
+package proto;
+
+service Calc {
+    rpc Add (CalcReq) returns (CalcRes) {}
+    rpc Minus (CalcReq) returns (CalcRes) {}
+    rpc Product (CalcReq) returns (CalcRes) {}
+    rpc Div (CalcReq) returns (CalcRes) {}
+}
+
+message CalcReq {
+    repeated sint64 params = 1;
+}
+
+message CalcRes {
+    sint64 params = 1;
+}
