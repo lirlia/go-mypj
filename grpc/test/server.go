@@ -6,7 +6,7 @@ import (
 	"net"
 	"time"
 
-	pb "github.com/lirlia/go-mypj/grpc/myproto"
+	pb "github.com/lirlia/go-mypj/grpc/test/myproto"
 	"google.golang.org/grpc"
 )
 
