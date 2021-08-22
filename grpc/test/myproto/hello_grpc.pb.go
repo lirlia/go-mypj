@@ -18,7 +18,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type CloudClient interface {
-	GetData(ctx context.Context, in *DateRequest, opts ...grpc.CallOption) (*DateReply, error)
+	GetDate(ctx context.Context, in *DateRequest, opts ...grpc.CallOption) (*DateReply, error)
 }
 
 type cloudClient struct {
@@ -29,9 +29,9 @@ func NewCloudClient(cc grpc.ClientConnInterface) CloudClient {
 	return &cloudClient{cc}
 }
 
-func (c *cloudClient) GetData(ctx context.Context, in *DateRequest, opts ...grpc.CallOption) (*DateReply, error) {
+func (c *cloudClient) GetDate(ctx context.Context, in *DateRequest, opts ...grpc.CallOption) (*DateReply, error) {
 	out := new(DateReply)
-	err := c.cc.Invoke(ctx, "/myproto.Cloud/GetData", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/myproto.Cloud/GetDate", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -42,7 +42,7 @@ func (c *cloudClient) GetData(ctx context.Context, in *DateRequest, opts ...grpc
 // All implementations must embed UnimplementedCloudServer
 // for forward compatibility
 type CloudServer interface {
-	GetData(context.Context, *DateRequest) (*DateReply, error)
+	GetDate(context.Context, *DateRequest) (*DateReply, error)
 	mustEmbedUnimplementedCloudServer()
 }
 
@@ -50,8 +50,8 @@ type CloudServer interface {
 type UnimplementedCloudServer struct {
 }
 
-func (UnimplementedCloudServer) GetData(context.Context, *DateRequest) (*DateReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetData not implemented")
+func (UnimplementedCloudServer) GetDate(context.Context, *DateRequest) (*DateReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetDate not implemented")
 }
 func (UnimplementedCloudServer) mustEmbedUnimplementedCloudServer() {}
 
@@ -66,20 +66,20 @@ func RegisterCloudServer(s grpc.ServiceRegistrar, srv CloudServer) {
 	s.RegisterService(&Cloud_ServiceDesc, srv)
 }
 
-func _Cloud_GetData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Cloud_GetDate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DateRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CloudServer).GetData(ctx, in)
+		return srv.(CloudServer).GetDate(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/myproto.Cloud/GetData",
+		FullMethod: "/myproto.Cloud/GetDate",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CloudServer).GetData(ctx, req.(*DateRequest))
+		return srv.(CloudServer).GetDate(ctx, req.(*DateRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -92,8 +92,8 @@ var Cloud_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*CloudServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetData",
-			Handler:    _Cloud_GetData_Handler,
+			MethodName: "GetDate",
+			Handler:    _Cloud_GetDate_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
