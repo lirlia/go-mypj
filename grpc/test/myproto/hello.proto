@@ -1,5 +1,5 @@
 syntax = "proto3";
-option go_package = "github.com/lirlia/go-mypj/grpc/test";
+option go_package = "github.com/lirlia/go-mypj/grpc/test/myproto";
 package myproto;
 
 service Cloud {
