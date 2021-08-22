@@ -1,0 +1,16 @@
+syntax = "proto3";
+option go_package = "github.com/lirlia/go-mypj/grpc/test";
+package myproto;
+import "google/protobuf/timestamp.proto";
+
+service Cloud {
+    rpc GetData (DateRequest) returns (DateReply){}
+}
+
+message DateRequest {
+    string Locale = 1;
+}
+
+message DateReply {
+    google.protobuf.Timestamp date = 1;
+}
