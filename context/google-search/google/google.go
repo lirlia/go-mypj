@@ -15,7 +15,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"../userip"
+	"github.com/lirlia/go-mypj/context/google-search/userip"
 )
 
 // Results is an ordered list of search results.

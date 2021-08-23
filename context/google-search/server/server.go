@@ -19,8 +19,8 @@ import (
 	"net/http"
 	"time"
 
-	"golang.org/x/blog/content/context/google"
-	"golang.org/x/blog/content/context/userip"
+	"github.com/lirlia/go-mypj/context/google-search/google"
+	"github.com/lirlia/go-mypj/context/google-search/userip"
 )
 
 func main() {
