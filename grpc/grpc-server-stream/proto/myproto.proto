@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+option go_package = "github.com/lirlia/go-mypj/grpc/grpc-server-stream/proto";
+package proto;
+
+service Notification {
+    rpc Notification (NotificationReq) returns (stream NotificationRes) {}
+}
+
+message NotificationReq {
+    int32 num = 1;
+}
+
+message NotificationRes {
+    string message = 1;
+}
