@@ -6,7 +6,7 @@ import (
 	"log"
 	"net"
 
-	pb "github.com/lirlia/go-mypj/grpc/mygrpc/proto"
+	pb "github.com/lirlia/go-mypj/grpc/grpc-unary/proto"
 	"google.golang.org/grpc"
 )
 
