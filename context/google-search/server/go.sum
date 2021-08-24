@@ -150,8 +150,8 @@ github.com/kisielk/gotool v1.0.0/go.mod h1:XhKaO+MFFWcvkIS/tQcRk01m1F5IRFswLeQ+o
 github.com/kr/pretty v0.1.0/go.mod h1:dAy3ld7l9f0ibDNOQOHHMYYIIbhfbHSm3C4ZsoJORNo=
 github.com/kr/pty v1.1.1/go.mod h1:pFQYn66WHrOpPYNljwOMqo10TkYh1fy3cYio2l3bCsQ=
 github.com/kr/text v0.1.0/go.mod h1:4Jbv+DJW3UT/LiOwJeYQe1efqtUx/iVham/4vfdArNI=
-github.com/lirlia/go-mypj v0.0.0-20210823135835-7904ff5424b6 h1:e9K51w+ox6rJC/zist7SZnXeIsvoK4qQqy307BKHbio=
-github.com/lirlia/go-mypj v0.0.0-20210823135835-7904ff5424b6/go.mod h1:nPT5ug4yZx7SHETbtXWVKxz/xOaJNuWX25a8+EBgYD4=
+github.com/lirlia/go-mypj v0.0.0-20210823140548-5cc948c85f7d h1:rboO4DuRET8wh7XHnB/i859e11RL/bI/oJL3qLXQTgM=
+github.com/lirlia/go-mypj v0.0.0-20210823140548-5cc948c85f7d/go.mod h1:nPT5ug4yZx7SHETbtXWVKxz/xOaJNuWX25a8+EBgYD4=
 github.com/nxadm/tail v1.4.4/go.mod h1:kenIhsEOeOJmVchQTgglprH7qJGnHDVpk1VPCcaMI8A=
 github.com/nxadm/tail v1.4.8/go.mod h1:+ncqLTQzXmGhMZNUePPaPqPvBxHAIsmXswZKocGu+AU=
 github.com/onsi/ginkgo v1.6.0/go.mod h1:lLunBs/Ym6LB5Z9jYTR76FiuTmxDTDusOGeTQH+WWjE=
