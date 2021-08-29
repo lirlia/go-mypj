@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"os"
 	"strconv"
 )
 
@@ -12,18 +13,28 @@ type result struct {
 }
 
 // フィボナッチ数を呼び出す
-func (r result) fib(n int) int {
+func (r result) fib(n int) (int, error) {
+
+	if n < 0 {
+		return 0, fmt.Errorf("最小値は0です")
+	}
+
+	if n == 0 || n == 1 {
+		return n, nil
+	}
 
 	// Mapから計算結果を取り出す
 	v, ok := r.value[n]
 
 	// 値が存在しない場合のみ計算する
 	if !ok {
-		v = r.fib(n-2) + r.fib(n-1)
+		v1, _ := r.fib(n - 2)
+		v2, _ := r.fib(n - 1)
+		v = v1 + v2
 		r.value[n] = v
 	}
 
-	return v
+	return v, nil
 }
 
 func main() {
@@ -31,15 +42,19 @@ func main() {
 	v, err := strconv.Atoi(flag.Args()[0])
 
 	if err != nil {
-		panic(err)
+		fmt.Println(flag.Args()[0], "is invalid argument. arg must by a number")
+		os.Exit(1)
 	}
 
-	if v < 0 {
-		err = fmt.Errorf("最小値は0")
-		panic(err)
+	//	r := &result{map[int]int{0: 0, 1: 1}}
+	r := &result{
+		value: map[int]int{},
 	}
 
-	r := &result{map[int]int{0: 0, 1: 1}}
-
-	fmt.Println(r.fib(v))
+	v, err = r.fib(v)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+	fmt.Println(v)
 }
