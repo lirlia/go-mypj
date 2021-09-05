@@ -1,0 +1,252 @@
+syntax = "proto3";
+package com.xflag.durian.api;
+
+import "google/protobuf/descriptor.proto";
+
+import "api/user.proto";
+import "api/quest.proto";
+import "api/debug.proto";
+import "api/user_monq.proto";
+import "api/user_avatar.proto";
+import "api/user_profile.proto";
+import "api/user_status.proto";
+import "api/user_buster.proto";
+import "api/user_drone_item.proto";
+import "api/user_basic_item.proto";
+import "api/user_orb.proto";
+import "api/gacha.proto";
+import "api/gift.proto";
+
+option go_package = "github.com/xflagstudio/durian-protocols/api";
+option csharp_namespace = "XFLAG.Durian.Web";
+
+extend google.protobuf.MethodOptions {
+    // このオプションが true に設定されている RPC は、読み込み専用であることを示します。
+    // このような RPC は冪等性キーを引数に持たず、 UserDiff を返しません。
+    bool readonly = 50000;
+
+    // このオプションが true に設定されている RPC は、ログインした状態で呼ばれる必要があります。
+    bool needs_login = 50001;
+}
+
+service Durian {
+    // Debug
+    rpc UnaryEcho(UnaryEchoRequest) returns (UnaryEchoResponse) {
+        option (readonly) = true;
+        option (needs_login) = false;
+    }
+    rpc DebugError(DebugErrorRequest) returns (DebugErrorResponse) {
+        option (readonly) = true;
+        option (needs_login) = false;
+    }
+    rpc DebugAddUserMonq(DebugAddUserMonqRequest) returns (DebugAddUserMonqResponse) {
+        option (readonly) = false;
+        option (needs_login) = true;
+    }
+    rpc DebugAddUserAvatar(DebugAddUserAvatarRequest) returns (DebugAddUserAvatarResponse) {
+        option (readonly) = false;
+        option (needs_login) = true;
+    }
+    rpc DebugAddUserItem(DebugAddUserItemRequest) returns (DebugAddUserItemResponse) {
+        option (readonly) = false;
+        option (needs_login) = true;
+    }
+    rpc DebugIssueVoiceChatToken(DebugIssueVoiceChatTokenRequest) returns (DebugIssueVoiceChatTokenResponse) {
+        option (readonly) = false;
+        option (needs_login) = true;
+    }
+    rpc DebugRecoverUserStamina(DebugRecoverUserStaminaRequest) returns (DebugRecoverUserStaminaResponse) {
+        option (readonly) = false;
+        option (needs_login) = true;
+    }
+
+    // User
+    rpc GetMetadata(GetMetadataRequest) returns (GetMetadataResponse) {
+        option (readonly) = true;
+        option (needs_login) = false;
+    }
+    rpc RegisterUser(RegisterUserRequest) returns (RegisterUserResponse) {
+        option (readonly) = false;
+        option (needs_login) = false;
+    }
+    rpc Login(LoginRequest) returns (LoginResponse) {
+        option (readonly) = false;
+        option (needs_login) = false;
+    }
+
+    // Quest
+    // StartSoloQuest はソロでクエストを開始するための API です。
+    rpc StartSoloQuest(StartSoloQuestRequest) returns (StartSoloQuestResponse) {
+        option (readonly) = false;
+        option (needs_login) = true;
+    }
+    // FinishSoloQuest はソロでクエストを終了するための API です。
+    rpc FinishSoloQuest(FinishSoloQuestRequest) returns (FinishSoloQuestResponse) {
+        option (readonly) = false;
+        option (needs_login) = true;
+    }
+    // ContinueQuest はソロ・マルチクエストでコンテニューをするための API です。
+    rpc ContinueQuest(ContinueQuestRequest) returns (ContinueQuestResponse) {
+        option (readonly) = false;
+        option (needs_login) = true;
+    }
+    // CreateLocationMatching はホストが位置情報を使ったマッチングを開始するための API です。
+    rpc CreateLocationMatching(CreateLocationMatchingRequest) returns(CreateLocationMatchingResponse) {
+        option (readonly) = false;
+        option (needs_login) = true;
+    }
+    // CancelLocationMatching はホストが位置情報を使ったマッチングをキャンセルするための API です。
+    rpc CancelLocationMatching(CancelLocationMatchingRequest) returns(CancelLocationMatchingResponse) {
+        option (readonly) = false;
+        option (needs_login) = true;
+    }
+    // FindLocationMatchings はゲストが位置情報を使ってマッチングを検索するための API です。
+    // この API はサーバの状態に変化を起こしません。　
+    rpc FindLocationMatchings(FindLocationMatchingsRequest) returns(FindLocationMatchingsResponse) {
+        option (readonly) = true;
+        option (needs_login) = true;
+    }
+    // JoinMultiQuestAsBuster はゲストがバスターとしてマルチクエストに参加するための API です。
+    rpc JoinMultiQuestAsBuster(JoinMultiQuestAsBusterRequest) returns(JoinMultiQuestAsBusterResponse) {
+        option (readonly) = false;
+        option (needs_login) = true;
+    }
+    // JoinMultiQuestAsDrone はゲストがドローンとしてマルチクエストに参加するための API です。
+    rpc JoinMultiQuestAsDrone(JoinMultiQuestAsDroneRequest) returns(JoinMultiQuestAsDroneResponse) {
+        option (readonly) = false;
+        option (needs_login) = true;
+    }
+    // LeaveMultiQuest はゲストが参加しようとしているマルチクエストから退出するための API です。
+    rpc LeaveMultiQuest(LeaveMultiQuestRequest) returns(LeaveMultiQuestResponse) {
+        option (readonly) = false;
+        option (needs_login) = true;
+    }
+    // StartMultiQuest はホストがマルチクエストを開始するための API です。
+    rpc StartMultiQuest(StartMultiQuestRequest) returns(StartMultiQuestResponse) {
+        option (readonly) = false;
+        option (needs_login) = true;
+    }
+    // FinishMultiQuest はホストがマルチクエストを終了するための API です。
+    rpc FinishMultiQuest(FinishMultiQuestRequest) returns(FinishMultiQuestResponse) {
+        option (readonly) = false;
+        option (needs_login) = true;
+    }
+    // FinishGuestQuest はゲストがクエストを終了するための API です。
+    rpc FinishGuestQuest(FinishGuestQuestRequest) returns(FinishGuestQuestResponse) {
+        option (readonly) = false;
+        option (needs_login) = true;
+    }
+    // ResignGuestQuest はゲストが未完了のマルチクエストから抜けるための API です。
+    rpc ResignGuestQuest(ResignGuestQuestRequest) returns(ResignGuestQuestResponse) {
+        option (readonly) = false;
+        option (needs_login) = true;
+    }
+    // UseQuestDroneItem はクエスト中にドローンアイテムを消費するための API です。
+    rpc UseQuestDroneItem(UseQuestDroneItemRequest) returns(UseQuestDroneItemResponse) {
+        option (readonly) = false;
+        option (needs_login) = true;
+    }
+    // GetQuestBusters はマルチクエストの参加者情報を取得するための API です。
+    // この API はサーバの状態に変化を起こしません。　
+    rpc GetQuestBusters(GetQuestBustersRequest) returns(GetQuestBustersResponse) {
+        option (readonly) = true;
+        option (needs_login) = true;
+    }
+    // CreateQuestLotterySeed はドロップの抽選に必要なシードを取得するための API です。
+    rpc CreateQuestLotterySeed(CreateQuestLotterySeedRequest) returns(CreateQuestLotterySeedResponse) {
+        option (readonly) = false;
+        option (needs_login) = true;
+    }
+    // GetUnclosedQuest は、ユーザがまだ終了していないクエストを取得するための API です。
+    rpc GetUnclosedQuest(GetUnclosedQuestRequest) returns(GetUnclosedQuestResponse) {
+        option (readonly) = true;
+        option (needs_login) = true;
+    }
+
+    // Monq
+    rpc ListUserMonqs(ListUserMonqsRequest) returns (ListUserMonqsResponse) {
+        option (readonly) = true;
+        option (needs_login) = true;
+    }
+    // EnhancementUserMonq はユーザのモンQを強化するためのリクエストです。
+    rpc EnhanceUserMonq(EnhanceUserMonqRequest) returns (EnhanceUserMonqResponse) {
+        option (readonly) = false;
+        option (needs_login) = true;
+    }
+    // KizunaEnhanceUserMonq はユーザのモンQをキズナ合成するためのリクエストです。
+    rpc KizunaEnhanceUserMonq(KizunaEnhanceUserMonqRequest) returns (KizunaEnhanceUserMonqResponse) {
+        option (readonly) = false;
+        option (needs_login) = true;
+    }
+    // EvolutionUserMonq はユーザのモンQを覚醒するためのリクエストです。
+    rpc EvolutionUserMonq(EvolutionUserMonqRequest) returns(EvolutionUserMonqResponse) {
+        option (readonly) = false;
+        option (needs_login) = true;
+    }
+
+    // Avatar
+    rpc ListUserAvatars(ListUserAvatarsRequest) returns (ListUserAvatarsResponse) {
+        option (readonly) = true;
+        option (needs_login) = true;
+    }
+
+    // Buster
+    rpc ListUserBusters(ListUserBustersRequest) returns (ListUserBustersResponse) {
+        option (readonly) = true;
+        option (needs_login) = true;
+    }
+    rpc UpdateUserBuster(UpdateUserBusterRequest) returns (UpdateUserBusterResponse) {
+        option (readonly) = false;
+        option (needs_login) = true;
+    }
+
+    // Profile
+    rpc UpdateUserProfile(UpdateUserProfileRequest) returns (UpdateUserProfileResponse) {
+        option (readonly) = false;
+        option (needs_login) = true;
+    }
+    rpc FindUserProfile(FindUserProfileRequest) returns (FindUserProfileResponse) {
+        option (readonly) = true;
+        option (needs_login) = true;
+    }
+
+    // Status
+    rpc GetUserStatus(GetUserStatusRequest) returns(GetUserStatusResponse) {
+        option (readonly) = true;
+        option (needs_login) = true;
+    }
+
+    // DroneItem
+    rpc ListUserDroneItems(ListUserDroneItemsRequest) returns (ListUserDroneItemsResponse) {
+        option (readonly) = true;
+        option (needs_login) = true;
+    }
+
+    // BasicItem
+    rpc ListUserBasicItems(ListUserBasicItemsRequest) returns (ListUserBasicItemsResponse) {
+        option (readonly) = true;
+        option (needs_login) = true;
+    }
+
+    // UserOrb
+    rpc GetUserOrb(GetUserOrbRequest) returns (GetUserOrbResponse) {
+        option (readonly) = true;
+        option (needs_login) = true;
+    }
+
+    // Gacha
+    rpc DrawGacha(DrawGachaRequest) returns (DrawGachaResponse) {
+        option (readonly) = false;
+        option (needs_login) = true;
+    }
+
+    // Gift
+    rpc ListUserGifts(ListUserGiftsRequest) returns (ListUserGiftsResponse) {
+        option (readonly) = true;
+        option (needs_login) = true;
+    }
+    rpc ReceiveUserGifts(ReceiveUserGiftsRequest) returns (ReceiveUserGiftsResponse) {
+        option (readonly) = false;
+        option (needs_login) = true;
+    }
+}

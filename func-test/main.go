@@ -34,4 +34,5 @@ func main() {
 	v.Run(sum)
 	v.Run(diff)
 
+	v.Run(TestFunc(sum))
 }
