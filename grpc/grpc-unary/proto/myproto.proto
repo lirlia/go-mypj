@@ -12,6 +12,8 @@ service Calc {
 
 message CalcReq {
     repeated sint64 params = 1;
+    string x = 2;
+    string y = 3;
 }
 
 message CalcRes {

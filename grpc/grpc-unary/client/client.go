@@ -46,7 +46,8 @@ func main() {
 	var r *pb.CalcRes
 	switch way {
 	case "add":
-		r, _ = c.Add(ctx, &pb.CalcReq{Params: nums})
+		// r, _ = c.Add(ctx, &pb.CalcReq{Params: nums})
+		r, _ = c.Add(ctx, &pb.CalcReq{Params: nums, X: "aaaaaa", Y: "123"})
 	case "minus":
 		r, _ = c.Minus(ctx, &pb.CalcReq{Params: nums})
 	case "product":
