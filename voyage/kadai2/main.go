@@ -16,6 +16,7 @@ func main() {
 		querys, _ := url.ParseQuery(r.URL.RawQuery)
 
 		if querys.Get("url") != "" {
+
 			urls := strings.Split(querys.Get("url"), ",")
 			c := make(chan model.Page, len(urls))
 			wg := &sync.WaitGroup{}
