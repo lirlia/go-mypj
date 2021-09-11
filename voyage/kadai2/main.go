@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"io"
 	"net/http"
 	"net/url"
 	"strings"
@@ -26,10 +25,7 @@ func main() {
 				wg.Add(1)
 				go func() {
 					defer wg.Done()
-					p, err := model.Get(url)
-					if err != nil && err != io.EOF {
-						panic(err)
-					}
+					p := model.Get(url)
 					c <- *p
 				}()
 			}

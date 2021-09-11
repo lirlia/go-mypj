@@ -2,6 +2,7 @@ package model
 
 import (
 	"net/http"
+	"time"
 
 	"golang.org/x/net/html"
 )
@@ -12,6 +13,8 @@ type Page struct {
 	Description string `json:"description"`
 	OgTitle     string `json:"og_title"`
 	OgImage     string `json:"og_image"`
+	Status      string `json:"status"`
+	Reason      string `json:"reason"`
 }
 
 func isDescription(attrs []html.Attribute) bool {
@@ -44,18 +47,28 @@ func isOgImage(attrs []html.Attribute) bool {
 	return false
 }
 
-func Get(url string) (*Page, error) {
+func Get(url string) *Page {
 	page := &Page{}
 	page.URL = url
-	resp, err := http.Get(url)
+
+	c := &http.Client{
+		Timeout: 3 * time.Second,
+	}
+
+	resp, err := c.Get(url)
+	if resp != nil {
+		page.Status = resp.Status
+	}
 	if err != nil {
-		return nil, err
+		page.Reason = err.Error()
+		return page
 	}
 	defer resp.Body.Close()
 
 	doc, err := html.Parse(resp.Body)
 	if err != nil {
-		return nil, err
+		page.Reason = err.Error()
+		return page
 	}
 
 	var f func(*html.Node)
@@ -96,5 +109,5 @@ func Get(url string) (*Page, error) {
 	}
 	f(doc)
 
-	return page, nil
+	return page
 }
