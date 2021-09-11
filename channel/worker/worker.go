@@ -62,6 +62,7 @@ func main() {
 	wgQueue.Wait()
 	close(queue)
 	wg.Wait()
+
 	afterTime := time.Now()
 	duration := afterTime.Sub(beforeTime)
 	fmt.Printf("duration: %v, worker:%v , queue:%v\n", duration, WORKER_COUNT, QUEUE_COUNT)
