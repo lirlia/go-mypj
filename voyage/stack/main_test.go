@@ -1,7 +1,8 @@
-// fib_test.go
 package main
 
 import (
+	"strconv"
+	"sync"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -61,4 +62,41 @@ func TestStack(t *testing.T) {
 	assert.Equal(t, s.Pop(), "test3")
 	assert.Equal(t, s.Pop(), "test2")
 	assert.Equal(t, s.Pop(), "")
+
+	// go routine対応 stack
+	s.Limit = 100
+	var wg sync.WaitGroup
+	for i := 0; i < s.Limit; i++ {
+		val := i
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			s.Push(strconv.Itoa(val))
+		}()
+	}
+
+	wg.Wait()
+	assert.Equal(t, len(s.Value), s.Limit)
+
+	// go routine対応 pop
+	s = &Stack{Limit: 100}
+
+	assert.Equal(t, len(s.Value), 0)
+
+	for i := 0; i < s.Limit; i++ {
+		s.Push(strconv.Itoa(i))
+	}
+	assert.Equal(t, len(s.Value), s.Limit)
+
+	for i := 0; i < s.Limit; i++ {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			s.Pop()
+		}()
+	}
+
+	wg.Wait()
+	assert.Equal(t, len(s.Value), 0)
+
 }
