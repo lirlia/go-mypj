@@ -51,7 +51,7 @@ func main() {
 				panic(err)
 			}
 
-			msg := fmt.Sprintf("%v", p)
+			msg := fmt.Sprintf("%v", p.Title)
 			w.Write([]byte(msg))
 
 		}
